@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,25 +35,23 @@ public class MainActivity extends Activity {
             }
 
             if (freeStorageAndNotifyMethod != null) {
-                // freeStorageAndNotify(long freeStorageSize, IPackageDataObserver observer)
                 freeStorageAndNotifyMethod.invoke(pm, Long.MAX_VALUE, null);
                 Log.i(TAG, "Successfully invoked freeStorageAndNotify");
-                Toast.makeText(this, "Cache clearing requested.", Toast.LENGTH_SHORT).show();
             } else {
                 Log.e(TAG, "Method freeStorageAndNotify not found in PackageManager");
-                Toast.makeText(this, "Failed to clear cache: Method not found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Échec: méthode introuvable.", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             Log.e(TAG, "Error clearing cache", e);
-            Toast.makeText(this, "Error clearing cache.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erreur lors du nettoyage.", Toast.LENGTH_SHORT).show();
         }
 
-        // Close the app shortly after triggering the clean
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
+                Toast.makeText(MainActivity.this, "Nettoyage terminé", Toast.LENGTH_SHORT).show();
                 finish();
             }
-        }, 1500);
+        }, 3000);
     }
 }
