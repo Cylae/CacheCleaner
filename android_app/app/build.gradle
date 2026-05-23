@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.cachecleaner'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.cachecleaner"
+        minSdk 17
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+    }
+}
